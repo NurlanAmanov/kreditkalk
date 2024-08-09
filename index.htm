@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylee.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="kredit-kalk">
+        <div class="basliq">
+            <h2>Kredit kalkulyatoru </h2>
+            <img src="rabitebank.svg" alt="">
+        </div>
+        <span>Kredit məbləği AZN <br>
+            <input id="kreditmebleg" min="10000" max="300000" type="text" value="300" oninput="artanlar('kreditmebleg', 'range'); hesabla()">
+            <input id="range" type="range" min="20000" max="100000" value="300" oninput="deyerler('range', 'kreditmebleg'); hesabla()"></span>
+        <span>Kredit müddəti (ay) <br>
+            <input id="ayliq" type="text" value="3" oninput="artanlar('ayliq', 'range2'); hesabla()">
+            <input id="range2" type="range" min="3" max="48" value="3" oninput="deyerler('range2', 'ayliq'); hesabla()">
+       </span>
+        <span>Faiz dərəcəsi % <br>
+            <input id="faiz" type="text" value="10.5" step="0.1" oninput="artanlar('faiz', 'range3'); hesabla()"> 
+           
+            <input id="range3" type="range" min="10.5" max="24.09" step="0.1" value="10.5" oninput="deyerler('range3', 'faiz'); hesabla()">
+       <div class="neticeler">
+        <p class="ayliqlar"> Aylıq ödəniş: <p id="ntc"></p></p>
+       </div>
+    </div>
+
+    <script>
+          function deyerler(rangeId, textId) {
+            document.getElementById(textId).value = document.getElementById(rangeId).value;
+        }
+
+        function artanlar(textId, rangeId) {
+            document.getElementById(rangeId).value = document.getElementById(textId).value;
+        }
+        function hesabla() {
+            const kreditmebleg = +document.getElementById('kreditmebleg').value;
+            const ayliq = +document.getElementById('ayliq').value;
+            const faiz = +document.getElementById('faiz').value 
+            const ntc= document.getElementById('ntc')
+            let faizhesab = faiz / 100 / 12;
+            let hesablama = kreditmebleg * Math.pow((1 + faizhesab), ayliq) * faizhesab / (Math.pow((1 + faizhesab), ayliq) - 1);
+        
+            ntc.innerHTML =  hesablama.toFixed(2) + " ₼";
+        }
+        hesabla();
+    </script>
+</body>
+
+</html>
